@@ -36,6 +36,7 @@ export class PoolsService {
 
       container.name = pool.name;
       container.price = pool.avg_lp_price;
+      container.address = pool.pool_address;
 
       return container;
     });
@@ -43,7 +44,7 @@ export class PoolsService {
     return pools;
   }
 
-  async getPool(token1Symbol: string, token2Symbol: string) {
+  async getPool(poolAddress: string) {
     const API_URL =
       'https://stats.apy.vision/api/v1/pool_search/advanced_search';
     const params = {
@@ -66,12 +67,13 @@ export class PoolsService {
     const results = await lastValueFrom(request);
 
     const pool = results.find(
-      ({ name }) => name === `${token1Symbol}/${token2Symbol}`,
+      ({ pool_address }) => pool_address === poolAddress,
     );
     if (pool) {
       return {
         name: pool.name,
         price: pool.avg_lp_price,
+        address: pool.pool_address,
       };
     }
 

@@ -22,12 +22,14 @@ describe('PoolsService', () => {
     expect(service).toBeDefined();
     expect(httpService).toBeDefined();
   });
+
   describe('when API is available', () => {
     beforeEach(() => {
       const result: any = {
         data: {
           results: [
             {
+              pool_address: '0x811beed0119b4afce20d2583eb608c6f7af1954f',
               name: 'SHIB/WETH',
               avg_lp_price: 2.3000582494833397,
             },
@@ -49,6 +51,7 @@ describe('PoolsService', () => {
           expect.objectContaining({
             name: expect.any(String),
             price: expect.any(Number),
+            address: expect.any(String),
           }),
         ]),
       );
@@ -56,11 +59,14 @@ describe('PoolsService', () => {
 
     describe('and the pool exists', () => {
       it('should return a pool', async () => {
-        const pool = await service.getPool('SHIB', 'WETH');
+        const pool = await service.getPool(
+          '0x811beed0119b4afce20d2583eb608c6f7af1954f',
+        );
         expect(pool).toEqual(
           expect.objectContaining({
             name: expect.any(String),
             price: expect.any(Number),
+            address: expect.any(String),
           }),
         );
       });
@@ -68,9 +74,9 @@ describe('PoolsService', () => {
 
     describe('and the pool does not exist', () => {
       it('should throw an error', async () => {
-        await expect(service.getPool('SHIB', 'ETH')).rejects.toThrow(
-          'Pool not found',
-        );
+        await expect(
+          service.getPool('0x0000000000000000000000000000000000000000'),
+        ).rejects.toThrow('Pool not found');
       });
     });
   });

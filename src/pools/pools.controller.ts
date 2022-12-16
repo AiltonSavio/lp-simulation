@@ -10,11 +10,8 @@ export class PoolsController {
     return this.poolService.getPools();
   }
 
-  @Get('/:token1_symbol/:token2_symbol')
-  async getPool(
-    @Param('token1_symbol') token1Symbol: string,
-    @Param('token2_symbol') token2Symbol: string,
-  ) {
-    return this.poolService.getPool(token1Symbol, token2Symbol);
+  @Get('/:pool_address')
+  async getPool(@Param('pool_address') poolAddress: string) {
+    return this.poolService.getPool(poolAddress);
   }
 }
