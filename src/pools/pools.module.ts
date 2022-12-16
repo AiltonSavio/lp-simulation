@@ -8,5 +8,6 @@ import { ConfigModule } from '@nestjs/config';
   imports: [HttpModule, ConfigModule],
   providers: [PoolsService],
   controllers: [PoolsController],
+  exports: [PoolsService],
 })
 export class PoolsModule {}

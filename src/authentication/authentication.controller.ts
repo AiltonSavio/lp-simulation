@@ -30,7 +30,7 @@ export class AuthenticationController {
 
   @HttpCode(200)
   @UseGuards(LocalAuthenticationGuard)
-  @Post('log-in')
+  @Post('login')
   async logIn(@Req() request: RequestWithUser) {
     const { user } = request;
     const accessTokenCookie =

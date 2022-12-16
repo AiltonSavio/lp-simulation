@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { PoolsService } from '../pools/pools.service';
 import RequestWithUser from 'src/authentication/requestWithUser.interface';
@@ -10,6 +10,12 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly poolsService: PoolsService,
   ) {}
+
+  @Get()
+  @UseGuards(JwtAuthenticationGuard)
+  async getUser(@Req() req: RequestWithUser) {
+    return this.usersService.getById(req.user.id);
+  }
 
   @Post('invest')
   @UseGuards(JwtAuthenticationGuard)

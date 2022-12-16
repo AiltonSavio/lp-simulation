@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import Joi from '@hapi/joi';
+import * as Joi from '@hapi/joi';
 import { DatabaseModule } from './database/database.module';
 import { PoolsModule } from './pools/pools.module';
 import { UsersModule } from './users/users.module';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { LeaderboardModule } from './leaderboard/leaderboard.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
     PoolsModule,
     UsersModule,
     AuthenticationModule,
+    LeaderboardModule,
   ],
 })
 export class AppModule {}
