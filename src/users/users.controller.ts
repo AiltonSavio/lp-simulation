@@ -1,6 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { PoolsService } from '../pools/pools.service';
+import RequestWithUser from 'src/authentication/requestWithUser.interface';
+import JwtAuthenticationGuard from 'src/authentication/jwt-authentication.guard';
 
 @Controller('users')
 export class UsersController {
@@ -10,12 +12,12 @@ export class UsersController {
   ) {}
 
   @Post('invest')
-  async invest(@Body() poolAddress: string, @Body() userId: number) {
+  @UseGuards(JwtAuthenticationGuard)
+  async invest(@Body() poolAddress: string, @Req() req: RequestWithUser) {
     const pool = await this.poolsService.getPool(poolAddress);
-    const user = await this.usersService.getById(userId);
 
     return this.usersService.invest({
-      user,
+      user: req.user,
       poolAddress: pool.address,
       poolPrice: pool.price,
     });
