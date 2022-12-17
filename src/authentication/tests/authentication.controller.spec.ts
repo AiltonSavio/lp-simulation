@@ -49,7 +49,7 @@ describe('AuthenticationController', () => {
   });
   describe('when registering', () => {
     describe('and using valid data', () => {
-      it('should respond with the data of the user without the password', () => {
+      it('should respond with the data of the user', () => {
         const expectedData = {
           ...userData,
         };

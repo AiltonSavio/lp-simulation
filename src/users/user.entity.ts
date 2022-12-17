@@ -15,7 +15,7 @@ class User {
   @Column({ nullable: true })
   public poolAddress: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, type: 'float', default: 0.0 })
   public poolShares: number;
 
   @Column({

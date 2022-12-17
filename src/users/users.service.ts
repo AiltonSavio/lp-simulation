@@ -52,15 +52,16 @@ export class UsersService {
     const newUser = this.usersRepository.create({
       ...userData,
       poolShares: 0,
-      balance: 1000,
+      balance: 100000,
     });
     await this.usersRepository.save(newUser);
     return newUser;
   }
 
-  async setCurrentRefreshToken(refreshToken: string, userId: number) {
+  async setCurrentRefreshToken(refreshToken: string, user: User) {
     const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
-    await this.usersRepository.update(userId, {
+    return await this.usersRepository.save({
+      ...user,
       currentHashedRefreshToken,
     });
   }

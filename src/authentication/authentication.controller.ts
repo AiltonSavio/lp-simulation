@@ -38,14 +38,17 @@ export class AuthenticationController {
     const { cookie: refreshTokenCookie, token: refreshToken } =
       this.authenticationService.getCookieWithJwtRefreshToken(user.id);
 
-    await this.usersService.setCurrentRefreshToken(refreshToken, user.id);
+    const updatedUser = await this.usersService.setCurrentRefreshToken(
+      refreshToken,
+      user,
+    );
 
     request.res.setHeader('Set-Cookie', [
       accessTokenCookie,
       refreshTokenCookie,
     ]);
 
-    return user;
+    return updatedUser;
   }
 
   @UseGuards(JwtAuthenticationGuard)

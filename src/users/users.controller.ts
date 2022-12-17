@@ -19,7 +19,10 @@ export class UsersController {
 
   @Post('invest')
   @UseGuards(JwtAuthenticationGuard)
-  async invest(@Body() poolAddress: string, @Req() req: RequestWithUser) {
+  async invest(
+    @Body() { poolAddress }: { poolAddress: string },
+    @Req() req: RequestWithUser,
+  ) {
     const pool = await this.poolsService.getPool(poolAddress);
 
     return this.usersService.invest({
